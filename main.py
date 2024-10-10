@@ -38,8 +38,8 @@ def start():
     validation_split = 0.1
 
     batch_size = 128
-    total_epoch = 
-    learning_rate = 1e-4
+    total_epoch = 50
+    learning_rate = 1e-3
 
     patience = max(3, total_epoch//10)
     epochs_no_improve = 0
@@ -94,7 +94,7 @@ def start():
     loss_func = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5)
 
     best_loss = float('inf')
     # Training the Model
@@ -205,9 +205,7 @@ def start():
 
     # Log test metrics
     wandb.log({
-        "test_accuracy": test_accuracy,
-        "classification_report": class_report,
-        "confusion_matrix": conf_matrix.tolist()
+        "test_accuracy": test_accuracy
     })
 
     wandb.finish()

@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -40,6 +41,22 @@ class CNN(nn.Module):
             # Layer 2
             nn.Linear(512, 10)
         )
+
+        # Apply Kaiming initialization
+        self._initialize_weights()
+
+    def _initialize_weights(self):
+        for layer in self.conv_layers:
+            if isinstance(layer, nn.Conv2d):
+                nn.init.kaiming_normal_(layer.weight, mode='fan_out', nonlinearity='relu')
+            elif isinstance(layer, nn.BatchNorm2d):
+                nn.init.ones_(layer.weight)
+                nn.init.zeros_(layer.bias)
+
+        for layer in self.fc_layers:
+            if isinstance(layer, nn.Linear):
+                nn.init.kaiming_normal_(layer.weight, mode='fan_out', nonlinearity='relu')
+                nn.init.zeros_(layer.bias)
 
     def forward(self, x):
         x = self.conv_layers(x)

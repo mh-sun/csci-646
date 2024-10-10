@@ -3,3 +3,4 @@ data
 wandb
 checkpoint.pth.tar
 resnet.ipynb
+cnn.ipynb
