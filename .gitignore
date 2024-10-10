@@ -1,0 +1,5 @@
+data
+*.pyc
+wandb
+checkpoint.pth.tar
+resnet.ipynb
